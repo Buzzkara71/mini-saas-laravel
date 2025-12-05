@@ -5,9 +5,7 @@ WORKDIR /var/www/html
 COPY . /var/www/html
 
 # Install dependencies (composer.json & package.json)
-RUN composer install --no-dev --optimize-autoloader \
-    && npm install \
-    && npm run build
+RUN composer install --no-dev --optimize-autoloader 
 
 # Set environment variables
 ENV WEBROOT /var/www/html/public
