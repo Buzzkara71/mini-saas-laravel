@@ -1,9 +1,15 @@
 FROM richarvey/nginx-php-fpm:3.1.6
 
-COPY . .
+WORKDIR /var/www/html
 
-# Image config
-ENV SKIP_COMPOSER 1
+COPY . /var/www/html
+
+# Install dependencies (composer.json & package.json)
+RUN composer install --no-dev --optimize-autoloader \
+    && npm install \
+    && npm run build
+
+# Set environment variables
 ENV WEBROOT /var/www/html/public
 ENV PHP_ERRORS_STDERR 1
 ENV RUN_SCRIPTS 1
